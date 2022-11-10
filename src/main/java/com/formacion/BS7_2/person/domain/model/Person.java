@@ -2,17 +2,17 @@ package com.formacion.BS7_2.person.domain.model;
 
 
 import com.formacion.BS7_2.person.infraestructure.dto.input.PersonInputDto;
-import com.formacion.BS7_2.student.domain.Student;
-import com.formacion.BS7_2.teacher.domain.model.Teacher;
+
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.util.Date;
 
 
 @Data
-@NoArgsConstructor
+
 @Entity
 @Table(name = "persons")
 
@@ -44,11 +44,24 @@ public class Person implements Serializable {
     private String image_url;
     private Date termination_date;
 
+    public Person(String username, String password, String name, String surname, String company_email, String personal_email, String city, Boolean active, Date created_date, String image_url, Date termination_date) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.company_email = company_email;
+        this.personal_email = personal_email;
+        this.city = city;
+        this.active = active;
+        this.created_date = created_date;
+        this.image_url = image_url;
+        this.termination_date = termination_date;
+    }
 
+    public Person() {
+    }
 
-
-
-   public Person(PersonInputDto personInputDto){
+    public Person(PersonInputDto personInputDto){
        this.username = personInputDto.getUsername();
        this.password = personInputDto.getPassword();
        this.name =personInputDto.getName();
@@ -69,5 +82,6 @@ public class Person implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
+
 
 }

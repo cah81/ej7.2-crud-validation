@@ -7,11 +7,7 @@ import com.formacion.BS7_2.person.application.services.PersonService;
 import com.formacion.BS7_2.person.domain.model.Person;
 import com.formacion.BS7_2.person.infraestructure.dto.input.PersonInputDto;
 import com.formacion.BS7_2.person.infraestructure.dto.output.PersonOutputDto;
-import com.formacion.BS7_2.student.domain.Student;
-import com.formacion.BS7_2.student.infraestructure.repository.StudentDaoRepository;
-import com.formacion.BS7_2.teacher.domain.model.Teacher;
 
-import com.formacion.BS7_2.teacher.infraestructure.repository.TeacherDaoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +26,6 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     PersonDaoRepository personDaoRepository;
-
-    @Autowired
-    StudentDaoRepository studentDaoRepository;
-
-    @Autowired
-    TeacherDaoRepository teacherDaoRepository;
 
 
     //Servicio para agregar persona
@@ -94,11 +84,6 @@ public class PersonServiceImpl implements PersonService {
         Optional<Person> personOptional = personDaoRepository.findById(id);
         if (personOptional.isEmpty()){
             throw new EntityNotFoundException("Error person does not exist",404, new Date());
-        }
-        Optional<Student> studentOptional = studentDaoRepository.findByPerson(personOptional.get());
-        Optional<Teacher> teacherOptional = teacherDaoRepository.findByPerson(personOptional.get());
-        if(studentOptional.isPresent() ||teacherOptional.isPresent()){
-            throw new UnprocessableEntityException("Can not be deleted,user",422,new Date());
         }
         personDaoRepository.delete(personOptional.get());
         return "Person deleted";
